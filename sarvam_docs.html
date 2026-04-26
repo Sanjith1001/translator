@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indian Language Chatbot — Sarvam AI Docs</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --surface: #111318;
+    --surface2: #181c24;
+    --border: #1f2533;
+    --accent: #ff6b35;
+    --accent2: #ffd166;
+    --blue: #4a9eff;
+    --green: #3dffa0;
+    --purple: #a78bfa;
+    --text: #e8ecf0;
+    --muted: #7a8499;
+    --code-bg: #0d1117;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 0 0 40px;
+  }
+
+  .sidebar-logo {
+    padding: 28px 24px 20px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+
+  .sidebar-logo .product-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.02em;
+  }
+
+  .sidebar-logo .version-badge {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    background: rgba(255,107,53,0.15);
+    color: var(--accent);
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(255,107,53,0.3);
+  }
+
+  .nav-section {
+    padding: 8px 16px 4px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 24px;
+    font-size: 13.5px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    border-left: 2px solid transparent;
+    text-decoration: none;
+  }
+
+  .nav-item:hover, .nav-item.active {
+    color: var(--text);
+    background: rgba(255,255,255,0.04);
+    border-left-color: var(--accent);
+  }
+
+  .nav-item .nav-icon { font-size: 14px; width: 18px; text-align: center; }
+
+  /* Main */
+  .main {
+    flex: 1;
+    max-width: 900px;
+    padding: 0 60px 80px;
+    overflow-x: hidden;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 64px 0 48px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 56px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -80px;
+    width: 400px; height: 300px;
+    background: radial-gradient(ellipse, rgba(255,107,53,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 46px;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+
+  h1 span { color: var(--accent); }
+
+  .hero-desc {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid;
+  }
+
+  .badge-orange { background: rgba(255,107,53,0.1); color: var(--accent); border-color: rgba(255,107,53,0.25); }
+  .badge-blue { background: rgba(74,158,255,0.1); color: var(--blue); border-color: rgba(74,158,255,0.25); }
+  .badge-green { background: rgba(61,255,160,0.1); color: var(--green); border-color: rgba(61,255,160,0.25); }
+  .badge-yellow { background: rgba(255,209,102,0.1); color: var(--accent2); border-color: rgba(255,209,102,0.25); }
+  .badge-purple { background: rgba(167,139,250,0.1); color: var(--purple); border-color: rgba(167,139,250,0.25); }
+
+  /* Sections */
+  section { margin-bottom: 64px; scroll-margin-top: 24px; }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 24px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  h2 .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    background: rgba(255,107,53,0.1);
+    border: 1px solid rgba(255,107,53,0.2);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 28px 0 14px;
+  }
+
+  p { color: #b0b8c8; margin-bottom: 14px; }
+
+  /* Cards */
+  .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .card:hover { border-color: rgba(255,107,53,0.4); transform: translateY(-1px); }
+
+  .card-icon { font-size: 22px; margin-bottom: 10px; }
+  .card-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  .card-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* Code blocks */
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin: 16px 0;
+    overflow: hidden;
+  }
+
+  .code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .code-lang {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .copy-btn {
+    font-size: 11px;
+    color: var(--muted);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 3px 10px;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    transition: all 0.15s;
+  }
+
+  .copy-btn:hover { color: var(--text); border-color: var(--accent); }
+
+  pre {
+    padding: 20px;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    color: #c9d1d9;
+  }
+
+  /* Syntax colors */
+  .kw { color: #ff7b72; }
+  .str { color: #a5d6ff; }
+  .fn { color: #d2a8ff; }
+  .cm { color: #8b949e; font-style: italic; }
+  .var { color: #ffa657; }
+  .num { color: #79c0ff; }
+
+  /* Tables */
+  .table-wrap { overflow-x: auto; margin: 16px 0; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+
+  thead th {
+    background: var(--surface2);
+    color: var(--muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  tbody td {
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: #b0b8c8;
+    vertical-align: top;
+  }
+
+  tbody tr:hover td { background: rgba(255,255,255,0.02); }
+
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    background: rgba(255,255,255,0.06);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--accent2);
+  }
+
+  /* Callouts */
+  .callout {
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 16px 0;
+    display: flex;
+    gap: 12px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .callout-warn { background: rgba(255,107,53,0.08); border-left: 3px solid var(--accent); color: #d0c0b8; }
+  .callout-tip  { background: rgba(61,255,160,0.07); border-left: 3px solid var(--green);  color: #b0d0c0; }
+  .callout-info { background: rgba(74,158,255,0.07); border-left: 3px solid var(--blue);   color: #b0c0d8; }
+  .callout-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  /* Roadmap */
+  .roadmap-phase { margin-bottom: 28px; }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .phase-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  .ph1 { background: rgba(255,107,53,0.15); color: var(--accent); }
+  .ph2 { background: rgba(74,158,255,0.15); color: var(--blue); }
+  .ph3 { background: rgba(61,255,160,0.15); color: var(--green); }
+  .ph4 { background: rgba(167,139,250,0.15); color: var(--purple); }
+
+  .phase-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 600; color: var(--text); }
+
+  /* File tree */
+  .file-tree {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 2;
+  }
+
+  .ft-dir { color: var(--blue); font-weight: 500; }
+  .ft-file { color: #c9d1d9; }
+  .ft-comment { color: var(--muted); }
+
+  /* DB ER */
+  .er-diagram {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.9;
+    color: #8b949e;
+  }
+
+  .er-table { color: var(--accent2); font-weight: 600; }
+  .er-pk { color: var(--green); }
+  .er-fk { color: var(--purple); }
+  .er-rel { color: var(--accent); }
+
+  /* Language chips */
+  .lang-grid { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+  .lang-chip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 6px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .lang-chip span:first-child { color: var(--text); }
+
+  /* Security checklist */
+  .checklist { list-style: none; }
+  .checklist li {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 14px;
+    color: #b0b8c8;
+  }
+  .checklist li::before {
+    content: '✓';
+    color: var(--green);
+    font-weight: 700;
+    font-size: 13px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero, section { animation: fadeUp 0.45s ease both; }
+  section:nth-child(2) { animation-delay: 0.05s; }
+  section:nth-child(3) { animation-delay: 0.10s; }
+  section:nth-child(4) { animation-delay: 0.15s; }
+
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .main { padding: 0 24px 60px; }
+    h1 { font-size: 32px; }
+    .cards-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="product-name">🇮🇳 Indian Language Chatbot</div>
+    <div class="version-badge">v1.0 · April 2026</div>
+  </div>
+
+  <div class="nav-section">Getting Started</div>
+  <a href="#overview" class="nav-item active"><span class="nav-icon">📋</span> Overview</a>
+  <a href="#tech-stack" class="nav-item"><span class="nav-icon">⚙️</span> Tech Stack</a>
+  <a href="#setup" class="nav-item"><span class="nav-icon">🚀</span> Setup & Install</a>
+
+  <div class="nav-section">Core</div>
+  <a href="#implementation" class="nav-item"><span class="nav-icon">💻</span> Implementation</a>
+  <a href="#ui" class="nav-item"><span class="nav-icon">🖥️</span> Streamlit UI</a>
+  <a href="#languages" class="nav-item"><span class="nav-icon">🌐</span> Languages</a>
+
+  <div class="nav-section">Data & Models</div>
+  <a href="#database" class="nav-item"><span class="nav-icon">🗄️</span> Database Schema</a>
+  <a href="#models" class="nav-item"><span class="nav-icon">🤖</span> Model Reference</a>
+  <a href="#api-ref" class="nav-item"><span class="nav-icon">📡</span> API Quick Ref</a>
+
+  <div class="nav-section">Planning</div>
+  <a href="#structure" class="nav-item"><span class="nav-icon">📁</span> File Structure</a>
+  <a href="#roadmap" class="nav-item"><span class="nav-icon">🗺️</span> Roadmap</a>
+
+  <div class="nav-section">Ops</div>
+  <a href="#troubleshooting" class="nav-item"><span class="nav-icon">🔧</span> Troubleshooting</a>
+  <a href="#security" class="nav-item"><span class="nav-icon">🔒</span> Security</a>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <!-- HERO -->
+  <div class="hero" id="overview">
+    <div class="hero-eyebrow">Powered by Sarvam AI</div>
+    <h1>Indian Language<br><span>Chatbot</span></h1>
+    <p class="hero-desc">A fully functional multilingual AI chatbot supporting 22 Indian languages. Auto-detects language per message, remembers conversation history, and handles code-mixed text naturally.</p>
+    <div class="hero-badges">
+      <span class="badge badge-orange">22 Indian Languages</span>
+      <span class="badge badge-blue">Auto Language Detection</span>
+      <span class="badge badge-green">Hinglish / Tanglish</span>
+      <span class="badge badge-yellow">10-Turn Memory</span>
+      <span class="badge badge-purple">Streamlit UI</span>
+    </div>
+  </div>
+
+  <!-- TECH STACK -->
+  <section id="tech-stack">
+    <h2><span class="section-num">02</span> Tech Stack</h2>
+    <div class="cards-grid">
+      <div class="card"><div class="card-icon">🐍</div><div class="card-title">Python 3.11+</div><div class="card-desc">Core application language</div></div>
+      <div class="card"><div class="card-icon">📦</div><div class="card-title">uv</div><div class="card-desc">Replaces pip + venv + pyenv in one tool</div></div>
+      <div class="card"><div class="card-icon">🤖</div><div class="card-title">Sarvam AI SDK</div><div class="card-desc">Chat, language detection, translation, TTS, STT</div></div>
+      <div class="card"><div class="card-icon">🖥️</div><div class="card-title">Streamlit</div><div class="card-desc">Web chat interface — zero frontend code</div></div>
+      <div class="card"><div class="card-icon">🔑</div><div class="card-title">python-dotenv</div><div class="card-desc">Loads API keys from .env safely</div></div>
+      <div class="card"><div class="card-icon">⚙️</div><div class="card-title">pyproject.toml</div><div class="card-desc">Modern Python project config & dependency lock</div></div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Layer</th><th>Technology</th><th>Version</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td>AI Model — Chat</td><td><code>sarvam-105b</code></td><td>Current</td><td>Flagship multilingual chat (10 Indian + English)</td></tr>
+          <tr><td>AI Model — Chat (Fast)</td><td><code>sarvam-30b</code></td><td>Current</td><td>Faster, cheaper chat alternative</td></tr>
+          <tr><td>AI Model — STT</td><td><code>saaras:v3</code></td><td>Current</td><td>Speech to Text — 22 Indian + English</td></tr>
+          <tr><td>AI Model — TTS</td><td><code>bulbul:v3</code></td><td>Current</td><td>Text to Speech — 30+ voices, 11 languages</td></tr>
+          <tr><td>AI Model — Translation</td><td><code>sarvam-translate:v1</code></td><td>Current</td><td>Translation — all 22 Indian + English</td></tr>
+          <tr><td>AI Model — Translation (Style)</td><td><code>mayura:v1</code></td><td>Current</td><td>Formal / colloquial style control</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SETUP -->
+  <section id="setup">
+    <h2><span class="section-num">05</span> Environment Setup & Installation</h2>
+
+    <h3>1. Install uv</h3>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">bash — macOS / Linux</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+      <pre>curl -LsSf https://astral.sh/uv/install.sh | sh</pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">powershell — Windows</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+      <pre>powershell -c "irm https://astral.sh/uv/install.ps1 | iex"</pre>
+    </div>
+
+    <h3>2. Create & Initialise Project</h3>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+      <pre>uv init sarvam-chatbot
+cd sarvam-chatbot</pre>
+    </div>
+
+    <h3>3. Add Dependencies</h3>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+      <pre>uv add sarvamai streamlit python-dotenv</pre>
+    </div>
+
+    <h3>4. Configure API Key</h3>
+    <p>Get your key from <code>dashboard.sarvam.ai</code>. Create a <code>.env</code> file in the project root:</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">.env</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+      <pre>SARVAM_API_KEY=sk-your-key-here</pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">bash — add to .gitignore</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+      <pre>echo ".env" >> .gitignore
+echo ".venv/" >> .gitignore</pre>
+    </div>
+
+    <h3>5. Verify Connection</h3>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">python — verify.py</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+      <pre><span class="kw">import</span> os
+<span class="kw">from</span> dotenv <span class="kw">import</span> load_dotenv
+<span class="kw">from</span> sarvamai <span class="kw">import</span> SarvamAI
+
+load_dotenv()
+client = <span class="fn">SarvamAI</span>(api_subscription_key=os.environ[<span class="str">"SARVAM_API_KEY"</span>])
+<span class="fn">print</span>(<span class="str">"Connected to Sarvam AI ✓"</span>)</pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+      <pre>uv run verify.py</pre>
+    </div>
+  </section>
+
+  <!-- IMPLEMENTATION -->
+  <section id="implementation">
+    <h2><span class="section-num">06</span> Core Implementation</h2>
+
+    <div class="callout callout-warn">
+      <span class="callout-icon">⚠️</span>
+      <div><strong>Key SDK Difference vs OpenAI:</strong> The Sarvam SDK does <em>not</em> use <code>.create()</code>. Call <code>.completions()</code> directly — no <code>.create()</code> suffix.</div>
+    </div>
+
+    <h3>Chat with Conversation Memory</h3>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">python — chat.py</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+      <pre>conversation_history = []
+MAX_HISTORY = <span class="num">20</span>  <span class="cm"># last 20 messages = 10 turns</span>
+
+system_prompt = {
+    <span class="str">"role"</span>: <span class="str">"system"</span>,
+    <span class="str">"content"</span>: <span class="str">"""You are a helpful AI assistant. Respond in
+the language the user writes in. Keep replies concise."""</span>
+}
+
+<span class="kw">def</span> <span class="fn">chat</span>(user_message: str) -> str:
+    conversation_history.<span class="fn">append</span>({<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: user_message})
+
+    response = client.chat.<span class="fn">completions</span>(
+        model=<span class="str">"sarvam-105b"</span>,
+        messages=[system_prompt] + conversation_history[-MAX_HISTORY:]
+    )
+
+    reply = response.choices[<span class="num">0</span>].message.content
+    conversation_history.<span class="fn">append</span>({<span class="str">"role"</span>: <span class="str">"assistant"</span>, <span class="str">"content"</span>: reply})
+    <span class="kw">return</span> reply</pre>
+    </div>
+
+    <h3>Language Detection</h3>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">python — language.py</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+      <pre><span class="kw">def</span> <span class="fn">detect_language</span>(text: str) -> str:
+    <span class="str">"""Returns BCP-47 code: hi-IN, ta-IN, ml-IN, etc."""</span>
+    response = client.text.<span class="fn">identify_language</span>(input=text)
+    <span class="kw">return</span> response.language_code
+
+LANGUAGE_NAMES = {
+    <span class="str">"hi-IN"</span>: <span class="str">"Hindi"</span>,   <span class="str">"ta-IN"</span>: <span class="str">"Tamil"</span>,   <span class="str">"te-IN"</span>: <span class="str">"Telugu"</span>,
+    <span class="str">"ml-IN"</span>: <span class="str">"Malayalam"</span>, <span class="str">"kn-IN"</span>: <span class="str">"Kannada"</span>,  <span class="str">"bn-IN"</span>: <span class="str">"Bengali"</span>,
+    <span class="str">"mr-IN"</span>: <span class="str">"Marathi"</span>,  <span class="str">"gu-IN"</span>: <span class="str">"Gujarati"</span>, <span class="str">"pa-IN"</span>: <span class="str">"Punjabi"</span>,
+    <span class="str">"od-IN"</span>: <span class="str">"Odia"</span>,    <span class="str">"as-IN"</span>: <span class="str">"Assamese"</span>, <span class="str">"ur-IN"</span>: <span class="str">"Urdu"</span>,
+    <span class="str">"en-IN"</span>: <span class="str">"English"</span>
+}</pre>
+    </div>
+
+    <h3>Dynamic Language-Aware Chat</h3>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+      <pre><span class="kw">def</span> <span class="fn">chat</span>(user_message: str) -> tuple[str, str]:
+    lang_code = <span class="fn">detect_language</span>(user_message)
+    lang_name = LANGUAGE_NAMES.<span class="fn">get</span>(lang_code, <span class="str">"Hindi"</span>)
+
+    conversation_history.<span class="fn">append</span>({<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: user_message})
+
+    dynamic_system = {
+        <span class="str">"role"</span>: <span class="str">"system"</span>,
+        <span class="str">"content"</span>: <span class="fn">f</span><span class="str">"You are a helpful assistant. The user writes in {lang_name}. "</span>
+                   <span class="fn">f</span><span class="str">"Always respond in {lang_name}. Be warm and concise."</span>
+    }
+
+    response = client.chat.<span class="fn">completions</span>(
+        model=<span class="str">"sarvam-105b"</span>,
+        messages=[dynamic_system] + conversation_history[-MAX_HISTORY:]
+    )
+
+    reply = response.choices[<span class="num">0</span>].message.content
+    conversation_history.<span class="fn">append</span>({<span class="str">"role"</span>: <span class="str">"assistant"</span>, <span class="str">"content"</span>: reply})
+    <span class="kw">return</span> reply, lang_code</pre>
+    </div>
+
+    <h3>Translation</h3>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">python — translation.py</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+      <pre><span class="kw">def</span> <span class="fn">translate_text</span>(text: str, target_language: str,
+                    source_language: str = <span class="str">"auto"</span>) -> str:
+    response = client.text.<span class="fn">translate</span>(
+        input=text,
+        source_language_code=source_language,
+        target_language_code=target_language,
+        model=<span class="str">"sarvam-translate:v1"</span>
+    )
+    <span class="kw">return</span> response.translated_text
+
+<span class="cm"># Formal style (mayura:v1)</span>
+client.text.<span class="fn">translate</span>(
+    input=<span class="str">"Your payment is pending"</span>,
+    source_language_code=<span class="str">"en-IN"</span>,
+    target_language_code=<span class="str">"hi-IN"</span>,
+    model=<span class="str">"mayura:v1"</span>,
+    mode=<span class="str">"formal"</span>
+)
+
+<span class="cm"># Colloquial style</span>
+client.text.<span class="fn">translate</span>(
+    input=<span class="str">"Your payment is pending"</span>,
+    source_language_code=<span class="str">"en-IN"</span>,
+    target_language_code=<span class="str">"hi-IN"</span>,
+    model=<span class="str">"mayura:v1"</span>,
+    mode=<span class="str">"modern-colloquial"</span>
+)</pre>
+    </div>
+  </section>
+
+  <!-- STREAMLIT UI -->
+  <section id="ui">
+    <h2><span class="section-num">07</span> Streamlit UI</h2>
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div>Run the complete UI with: <code>uv run streamlit run chatbot.py</code></div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">python — chatbot.py (full)</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+      <pre><span class="kw">import</span> streamlit <span class="kw">as</span> st
+<span class="kw">import</span> os
+<span class="kw">from</span> dotenv <span class="kw">import</span> load_dotenv
+<span class="kw">from</span> sarvamai <span class="kw">import</span> SarvamAI
+
+load_dotenv()
+client = <span class="fn">SarvamAI</span>(api_subscription_key=os.environ[<span class="str">"SARVAM_API_KEY"</span>])
+
+st.<span class="fn">set_page_config</span>(page_title=<span class="str">"Indian Language Chatbot"</span>, page_icon=<span class="str">"🇮🇳"</span>)
+st.<span class="fn">title</span>(<span class="str">"🇮🇳 Indian Language Chatbot"</span>)
+st.<span class="fn">caption</span>(<span class="str">"Powered by Sarvam AI - 22 Indian languages"</span>)
+
+<span class="cm"># Sidebar settings</span>
+<span class="kw">with</span> st.sidebar:
+    st.<span class="fn">header</span>(<span class="str">"Settings"</span>)
+    response_language = st.<span class="fn">selectbox</span>(
+        <span class="str">"Response Language"</span>,
+        [<span class="str">"Auto-detect"</span>, <span class="str">"Hindi"</span>, <span class="str">"Tamil"</span>, <span class="str">"Telugu"</span>,
+         <span class="str">"Malayalam"</span>, <span class="str">"Kannada"</span>, <span class="str">"Bengali"</span>, <span class="str">"Marathi"</span>, <span class="str">"Gujarati"</span>]
+    )
+    <span class="kw">if</span> st.<span class="fn">button</span>(<span class="str">"Clear conversation"</span>):
+        st.session_state.messages = []
+        st.<span class="fn">rerun</span>()
+
+<span class="cm"># Session state for chat history</span>
+<span class="kw">if</span> <span class="str">"messages"</span> <span class="kw">not in</span> st.session_state:
+    st.session_state.messages = []
+
+<span class="cm"># Render previous messages</span>
+<span class="kw">for</span> msg <span class="kw">in</span> st.session_state.messages:
+    <span class="kw">with</span> st.<span class="fn">chat_message</span>(msg[<span class="str">"role"</span>]):
+        st.<span class="fn">markdown</span>(msg[<span class="str">"content"</span>])
+
+<span class="cm"># Chat input</span>
+<span class="kw">if</span> prompt := st.<span class="fn">chat_input</span>(<span class="str">"Type in any language..."</span>):
+    st.session_state.messages.<span class="fn">append</span>({<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: prompt})
+    <span class="kw">with</span> st.<span class="fn">chat_message</span>(<span class="str">"user"</span>):
+        st.<span class="fn">markdown</span>(prompt)
+
+    <span class="kw">with</span> st.<span class="fn">chat_message</span>(<span class="str">"assistant"</span>):
+        response = client.chat.<span class="fn">completions</span>(
+            model=<span class="str">"sarvam-105b"</span>,
+            messages=st.session_state.messages[-<span class="num">20</span>:]
+        )
+        reply = response.choices[<span class="num">0</span>].message.content
+        st.<span class="fn">markdown</span>(reply)
+
+    st.session_state.messages.<span class="fn">append</span>({<span class="str">"role"</span>: <span class="str">"assistant"</span>, <span class="str">"content"</span>: reply})</pre>
+    </div>
+  </section>
+
+  <!-- LANGUAGES -->
+  <section id="languages">
+    <h2><span class="section-num">09</span> Supported Languages (BCP-47)</h2>
+    <div class="lang-grid">
+      <div class="lang-chip"><span>Hindi</span><span>hi-IN</span></div>
+      <div class="lang-chip"><span>Tamil</span><span>ta-IN</span></div>
+      <div class="lang-chip"><span>Telugu</span><span>te-IN</span></div>
+      <div class="lang-chip"><span>Malayalam</span><span>ml-IN</span></div>
+      <div class="lang-chip"><span>Kannada</span><span>kn-IN</span></div>
+      <div class="lang-chip"><span>Bengali</span><span>bn-IN</span></div>
+      <div class="lang-chip"><span>Marathi</span><span>mr-IN</span></div>
+      <div class="lang-chip"><span>Gujarati</span><span>gu-IN</span></div>
+      <div class="lang-chip"><span>Punjabi</span><span>pa-IN</span></div>
+      <div class="lang-chip"><span>Odia</span><span>od-IN</span></div>
+      <div class="lang-chip"><span>Assamese</span><span>as-IN</span></div>
+      <div class="lang-chip"><span>Urdu</span><span>ur-IN</span></div>
+      <div class="lang-chip"><span>English</span><span>en-IN</span></div>
+      <div class="lang-chip"><span>Hinglish</span><span>→ hi-IN</span></div>
+    </div>
+  </section>
+
+  <!-- DATABASE -->
+  <section id="database">
+    <h2><span class="section-num">03</span> Database Schema</h2>
+    <p>For production deployment, a PostgreSQL relational database persists conversations, user sessions, language preferences, and usage analytics.</p>
+
+    <h3>Entity Relationships</h3>
+    <div class="er-diagram">
+      <span class="er-table">users</span><br>
+      &nbsp;&nbsp;├── <span class="er-pk">user_id</span> (PK)<br>
+      &nbsp;&nbsp;├── [1] ←────── [N] <span class="er-fk">sessions.user_id</span> (FK)<br>
+      &nbsp;&nbsp;└── [1] ←────── [1] <span class="er-fk">user_preferences.user_id</span> (FK, UNIQUE)<br>
+      <br>
+      <span class="er-table">sessions</span><br>
+      &nbsp;&nbsp;├── <span class="er-pk">session_id</span> (PK)<br>
+      &nbsp;&nbsp;├── <span class="er-fk">user_id</span> (FK → users)<br>
+      &nbsp;&nbsp;├── [1] ←────── [N] <span class="er-fk">messages.session_id</span> (FK)<br>
+      &nbsp;&nbsp;├── [1] ←────── [N] <span class="er-fk">language_detections.session_id</span> (FK)<br>
+      &nbsp;&nbsp;└── [1] ←────── [N] <span class="er-fk">translations.session_id</span> (FK)<br>
+      <br>
+      <span class="er-table">messages</span><br>
+      &nbsp;&nbsp;├── <span class="er-pk">message_id</span> (PK)<br>
+      &nbsp;&nbsp;├── <span class="er-fk">session_id</span> (FK → sessions)<br>
+      &nbsp;&nbsp;├── [1] ←────── [N] <span class="er-fk">language_detections.message_id</span> (FK)<br>
+      &nbsp;&nbsp;└── [1] ←────── [N] <span class="er-fk">translations.message_id</span> (FK, nullable)
+    </div>
+
+    <h3>users table</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Column</th><th>Type</th><th>Key</th><th>Nullable</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>user_id</code></td><td>UUID</td><td>PK</td><td>NOT NULL</td><td>Auto-generated unique user identifier</td></tr>
+        <tr><td><code>username</code></td><td>VARCHAR(100)</td><td></td><td>NOT NULL</td><td>Display name or handle</td></tr>
+        <tr><td><code>email</code></td><td>VARCHAR(255)</td><td>UNIQUE</td><td>NOT NULL</td><td>User email address</td></tr>
+        <tr><td><code>password_hash</code></td><td>VARCHAR(255)</td><td></td><td>NOT NULL</td><td>bcrypt-hashed password</td></tr>
+        <tr><td><code>created_at</code></td><td>TIMESTAMP</td><td></td><td>NOT NULL</td><td>Account creation timestamp (UTC)</td></tr>
+        <tr><td><code>preferred_language</code></td><td>VARCHAR(10)</td><td></td><td>NULL</td><td>BCP-47 code e.g. hi-IN, ta-IN</td></tr>
+        <tr><td><code>is_active</code></td><td>BOOLEAN</td><td></td><td>NOT NULL</td><td>Soft-delete / active flag (default TRUE)</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>sessions table</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Column</th><th>Type</th><th>Key</th><th>Nullable</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>session_id</code></td><td>UUID</td><td>PK</td><td>NOT NULL</td><td>Unique session identifier</td></tr>
+        <tr><td><code>user_id</code></td><td>UUID</td><td>FK → users</td><td>NOT NULL</td><td>Owner of this session</td></tr>
+        <tr><td><code>started_at</code></td><td>TIMESTAMP</td><td></td><td>NOT NULL</td><td>When the session began</td></tr>
+        <tr><td><code>ended_at</code></td><td>TIMESTAMP</td><td></td><td>NULL</td><td>NULL if session is ongoing</td></tr>
+        <tr><td><code>primary_language</code></td><td>VARCHAR(10)</td><td></td><td>NULL</td><td>Dominant language detected in session</td></tr>
+        <tr><td><code>message_count</code></td><td>INTEGER</td><td></td><td>NOT NULL</td><td>Cached count of messages (default 0)</td></tr>
+        <tr><td><code>is_archived</code></td><td>BOOLEAN</td><td></td><td>NOT NULL</td><td>Archived/hidden flag (default FALSE)</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>messages table</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Column</th><th>Type</th><th>Key</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>message_id</code></td><td>UUID</td><td>PK</td><td>Unique message identifier</td></tr>
+        <tr><td><code>session_id</code></td><td>UUID</td><td>FK → sessions</td><td>Parent session</td></tr>
+        <tr><td><code>role</code></td><td>VARCHAR(20)</td><td></td><td>Enum: user | assistant | system</td></tr>
+        <tr><td><code>content</code></td><td>TEXT</td><td></td><td>Raw message text</td></tr>
+        <tr><td><code>language_code</code></td><td>VARCHAR(10)</td><td></td><td>Detected BCP-47 language code</td></tr>
+        <tr><td><code>token_count</code></td><td>INTEGER</td><td></td><td>Token count returned by API</td></tr>
+        <tr><td><code>model_used</code></td><td>VARCHAR(50)</td><td></td><td>e.g. sarvam-105b</td></tr>
+        <tr><td><code>sequence_num</code></td><td>INTEGER</td><td></td><td>Order within session (1-indexed)</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- MODELS -->
+  <section id="models">
+    <h2><span class="section-num">08</span> Sarvam AI Model Reference</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Model ID</th><th>Task</th><th>Languages</th><th>Status</th><th>Use For</th></tr></thead>
+      <tbody>
+        <tr><td><code>sarvam-105b</code></td><td>Chat — flagship</td><td>10 Indian + English</td><td><span class="badge badge-green" style="font-size:11px;padding:2px 8px;">Active</span></td><td>Primary chatbot model</td></tr>
+        <tr><td><code>sarvam-30b</code></td><td>Chat — fast/cheap</td><td>10 Indian + English</td><td><span class="badge badge-green" style="font-size:11px;padding:2px 8px;">Active</span></td><td>High-volume / budget use</td></tr>
+        <tr><td><code>saaras:v3</code></td><td>Speech to Text</td><td>22 Indian + English</td><td><span class="badge badge-green" style="font-size:11px;padding:2px 8px;">Active</span></td><td>Voice input feature</td></tr>
+        <tr><td><code>bulbul:v3</code></td><td>Text to Speech (30+ voices)</td><td>11 languages</td><td><span class="badge badge-green" style="font-size:11px;padding:2px 8px;">Active</span></td><td>Voice reply feature</td></tr>
+        <tr><td><code>mayura:v1</code></td><td>Translation (style control)</td><td>11 languages</td><td><span class="badge badge-green" style="font-size:11px;padding:2px 8px;">Active</span></td><td>Formal/colloquial translation</td></tr>
+        <tr><td><code>sarvam-translate:v1</code></td><td>Translation (all languages)</td><td>22 Indian + English</td><td><span class="badge badge-green" style="font-size:11px;padding:2px 8px;">Active</span></td><td>Broad translation coverage</td></tr>
+        <tr><td><code>sarvam-m</code></td><td>Chat — OLD</td><td>—</td><td><span class="badge" style="background:rgba(255,0,0,0.1);color:#ff6b6b;border-color:rgba(255,0,0,0.2);font-size:11px;padding:2px 8px;">Deprecated</span></td><td>Do NOT use</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- API QUICK REF -->
+  <section id="api-ref">
+    <h2><span class="section-num">11</span> API Quick Reference</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Operation</th><th>SDK Call</th><th>Key Parameters</th></tr></thead>
+      <tbody>
+        <tr><td>Chat completion</td><td><code>client.chat.completions(...)</code></td><td>model, messages (list of role+content dicts)</td></tr>
+        <tr><td>Language detection</td><td><code>client.text.identify_language(...)</code></td><td>input (text string)</td></tr>
+        <tr><td>Translation</td><td><code>client.text.translate(...)</code></td><td>input, source_language_code, target_language_code, model</td></tr>
+        <tr><td>Translation (styled)</td><td><code>client.text.translate(...)</code></td><td>…same + mode='formal' or 'modern-colloquial' (mayura:v1 only)</td></tr>
+        <tr><td>Read reply text</td><td><code>response.choices[0].message.content</code></td><td>—</td></tr>
+        <tr><td>Read language code</td><td><code>response.language_code</code></td><td>From identify_language response</td></tr>
+        <tr><td>Read translated text</td><td><code>response.translated_text</code></td><td>From translate response</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- FILE STRUCTURE -->
+  <section id="structure">
+    <h2><span class="section-num">04</span> Project File Structure</h2>
+    <div class="file-tree">
+      <span class="ft-dir">sarvam-chatbot/</span><br>
+      ├── <span class="ft-file">pyproject.toml</span>        <span class="ft-comment"># Project config & locked dependencies (PEP 621)</span><br>
+      ├── <span class="ft-file">.python-version</span>       <span class="ft-comment"># Python version pin managed by uv</span><br>
+      ├── <span class="ft-file">.env</span>                  <span class="ft-comment"># API key (git-ignored)</span><br>
+      ├── <span class="ft-file">.gitignore</span>            <span class="ft-comment"># Ignores .env and .venv/</span><br>
+      ├── <span class="ft-file">README.md</span>             <span class="ft-comment"># Project readme</span><br>
+      ├── <span class="ft-file">main.py</span>               <span class="ft-comment"># Entry point (optional CLI wrapper)</span><br>
+      ├── <span class="ft-file">verify.py</span>             <span class="ft-comment"># Connection test script</span><br>
+      ├── <span class="ft-file">chat_test.py</span>          <span class="ft-comment"># Chat API test script</span><br>
+      ├── <span class="ft-file">chatbot.py</span>            <span class="ft-comment"># Full Streamlit UI application</span><br>
+      ├── <span class="ft-dir">src/</span><br>
+      │   ├── <span class="ft-file">client.py</span>         <span class="ft-comment"># Sarvam AI client initialisation</span><br>
+      │   ├── <span class="ft-file">chat.py</span>           <span class="ft-comment"># Chat + memory logic</span><br>
+      │   ├── <span class="ft-file">language.py</span>       <span class="ft-comment"># Language detection helpers</span><br>
+      │   ├── <span class="ft-file">translation.py</span>    <span class="ft-comment"># Translation helpers</span><br>
+      │   ├── <span class="ft-file">database.py</span>       <span class="ft-comment"># DB session, models, CRUD (production)</span><br>
+      │   ├── <span class="ft-file">models.py</span>         <span class="ft-comment"># SQLAlchemy ORM models</span><br>
+      │   └── <span class="ft-file">config.py</span>         <span class="ft-comment"># Settings & constants</span><br>
+      └── <span class="ft-dir">tests/</span><br>
+          ├── <span class="ft-file">test_chat.py</span><br>
+          ├── <span class="ft-file">test_language.py</span><br>
+          └── <span class="ft-file">test_translation.py</span>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section id="roadmap">
+    <h2><span class="section-num">10</span> Project Roadmap</h2>
+
+    <div class="roadmap-phase">
+      <div class="phase-header">
+        <span class="phase-badge ph1">Phase 1</span>
+        <span class="phase-title">Foundation — Week 1 (~45 mins)</span>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Task</th><th>Description</th><th>Time</th></tr></thead>
+        <tbody>
+          <tr><td>Environment Setup</td><td>Install uv, init project, add dependencies</td><td>8 min</td></tr>
+          <tr><td>API Connection</td><td>Create .env, verify.py, test Sarvam connection</td><td>5 min</td></tr>
+          <tr><td>First Chat</td><td>chat_test.py — single message in Hindi & Tamil</td><td>10 min</td></tr>
+          <tr><td>Conversation Memory</td><td>Add history list + system prompt + chat() function</td><td>10 min</td></tr>
+          <tr><td>Language Detection</td><td>detect_language() using text.identify_language()</td><td>5 min</td></tr>
+          <tr><td>Translation</td><td>translate_text() with mayura and sarvam-translate</td><td>7 min</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="roadmap-phase">
+      <div class="phase-header">
+        <span class="phase-badge ph2">Phase 2</span>
+        <span class="phase-title">Streamlit UI — Week 1–2 (~23 mins)</span>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Task</th><th>Description</th><th>Time</th></tr></thead>
+        <tbody>
+          <tr><td>chatbot.py</td><td>Full Streamlit app with sidebar, chat history, input</td><td>10 min</td></tr>
+          <tr><td>Language Badge</td><td>Show detected language below each user message</td><td>5 min</td></tr>
+          <tr><td>Clear Button</td><td>Sidebar button to reset session history</td><td>3 min</td></tr>
+          <tr><td>Theme Support</td><td>Light / dark mode toggle in sidebar</td><td>5 min</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="roadmap-phase">
+      <div class="phase-header">
+        <span class="phase-badge ph3">Phase 3</span>
+        <span class="phase-title">Production Features — Week 2–3</span>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Feature</th><th>Description</th><th>Complexity</th></tr></thead>
+        <tbody>
+          <tr><td>Database Integration</td><td>PostgreSQL + SQLAlchemy ORM, persist sessions & messages</td><td>Medium</td></tr>
+          <tr><td>User Authentication</td><td>Login / register with JWT tokens (FastAPI or Streamlit auth)</td><td>Medium</td></tr>
+          <tr><td>Voice Input (STT)</td><td>Mic button in UI, send audio to saaras:v3</td><td>Medium</td></tr>
+          <tr><td>Voice Output (TTS)</td><td>Play reply via bulbul:v3 — 30+ Indian voice options</td><td>Medium</td></tr>
+          <tr><td>Translation Panel</td><td>Side-by-side original + translated text view</td><td>Low</td></tr>
+          <tr><td>Session History</td><td>Left panel listing past conversations by date</td><td>Medium</td></tr>
+          <tr><td>Export Chat</td><td>Download session as PDF or .txt</td><td>Low</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="roadmap-phase">
+      <div class="phase-header">
+        <span class="phase-badge ph4">Phase 4</span>
+        <span class="phase-title">Deployment — Week 3–4</span>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Step</th><th>Description</th><th>Tool</th></tr></thead>
+        <tbody>
+          <tr><td>Dockerise</td><td>Write Dockerfile, expose port 8501</td><td>Docker</td></tr>
+          <tr><td>CI/CD Pipeline</td><td>GitHub Actions — lint, test, build, push</td><td>GitHub Actions</td></tr>
+          <tr><td>Cloud Deploy</td><td>Deploy container to Railway, Render, or AWS ECS</td><td>Railway / Render</td></tr>
+          <tr><td>Env Secrets</td><td>Store SARVAM_API_KEY in platform secret manager</td><td>Platform secrets</td></tr>
+          <tr><td>Custom Domain</td><td>Map domain via platform DNS settings</td><td>DNS</td></tr>
+          <tr><td>Monitoring</td><td>Add Sentry for error tracking + usage logging</td><td>Sentry</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <!-- TROUBLESHOOTING -->
+  <section id="troubleshooting">
+    <h2><span class="section-num">12</span> Troubleshooting & Common Errors</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Error</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td><code>AttributeError: .create()</code></td><td>Using OpenAI SDK style</td><td>Use <code>client.chat.completions(...)</code> not <code>.create(...)</code></td></tr>
+        <tr><td><code>401 Unauthorized</code></td><td>Missing or invalid API key</td><td>Check .env file and SARVAM_API_KEY value</td></tr>
+        <tr><td>Model not found: <code>sarvam-m</code></td><td>Deprecated model</td><td>Switch to <code>sarvam-105b</code> or <code>sarvam-30b</code></td></tr>
+        <tr><td>Language not detected correctly</td><td>Text too short or heavily code-mixed</td><td>Use a longer input; Hinglish maps to hi-IN correctly</td></tr>
+        <tr><td>Translation returns source language</td><td>source_language_code mismatch</td><td>Use 'auto' for source when using mayura:v1</td></tr>
+        <tr><td>Streamlit: module not found</td><td>Virtual env not used</td><td>Always run with <code>uv run streamlit run chatbot.py</code></td></tr>
+        <tr><td>History too large</td><td>Sending all messages each call</td><td>Slice: <code>conversation_history[-MAX_HISTORY:]</code></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- SECURITY -->
+  <section id="security">
+    <h2><span class="section-num">13</span> Security Checklist</h2>
+    <ul class="checklist">
+      <li>NEVER commit <code>.env</code> to git — always add to <code>.gitignore</code> before first commit</li>
+      <li>NEVER hardcode <code>SARVAM_API_KEY</code> in source code</li>
+      <li>Use platform secret managers (Railway / Render / AWS SSM) in production</li>
+      <li>Hash all passwords with bcrypt before storing in DB</li>
+      <li>Use HTTPS only for any deployed endpoint</li>
+      <li>Rotate API keys every 90 days</li>
+      <li>Rate-limit the chat endpoint to prevent abuse</li>
+    </ul>
+  </section>
+
+</main>
+
+<script>
+  // Copy button
+  function copyCode(btn) {
+    const pre = btn.closest('.code-block').querySelector('pre');
+    const text = pre.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'copied!';
+      btn.style.color = 'var(--green)';
+      btn.style.borderColor = 'var(--green)';
+      setTimeout(() => { btn.textContent = 'copy'; btn.style.color = ''; btn.style.borderColor = ''; }, 1800);
+    });
+  }
+
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section, .hero');
+  const navItems = document.querySelectorAll('.nav-item');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navItems.forEach(n => n.classList.remove('active'));
+        const id = entry.target.id;
+        const active = document.querySelector(`.nav-item[href="#${id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.25 });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
